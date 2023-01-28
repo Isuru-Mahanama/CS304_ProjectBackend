@@ -2,6 +2,7 @@ package com.example.demo.Service;
 
 import com.example.demo.Model.*;
 import com.example.demo.dto.ClientDTO;
+import com.example.demo.dto.UserDTO;
 import com.example.demo.repo.ClientRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,11 @@ public class ClientService {
     public ClientDTO saveClient(Long userID) {
         ClientDTO clientDTO= new ClientDTO();
         clientDTO.setClientID(userID);
+        clientRepo.save(modelMapper.map(clientDTO, Client.class));
+        return clientDTO;
+    }
+
+    public ClientDTO accountSetUpClient(ClientDTO clientDTO){
         clientRepo.save(modelMapper.map(clientDTO, Client.class));
         return clientDTO;
     }

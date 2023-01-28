@@ -12,7 +12,7 @@ import org.springframework.stereotype.Indexed;
 @Data
 @Table(uniqueConstraints={
         @UniqueConstraint(columnNames = {"email"})
-})
+},indexes = @Index(name = "idx_userID_email",columnList = "userID, email"))
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

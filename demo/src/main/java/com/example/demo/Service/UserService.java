@@ -44,5 +44,14 @@ public class UserService {
     }
 
 
+    public UserDTO setUpPersonalAccount(UserDTO findUser, UserDTO userDTO) {
 
+        if(findUser != null){
+            findUser.setFirstName(userDTO.getFirstName());
+            User findUserClass = this.modelMapper.map(findUser,User.class);
+            userRepo.save(findUserClass);
+            return userDTO;
+        }
+        return null;
+    }
 }

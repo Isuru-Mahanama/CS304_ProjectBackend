@@ -12,10 +12,11 @@ import java.io.StringBufferInputStream;
 
 @RestController
 @RequestMapping(value ="api/v1/user")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins ="*")
 public class UserController {
 
     boolean success = false;
+
     @Autowired
     private UserService userService;
     @GetMapping("/getUser")
@@ -44,6 +45,20 @@ public class UserController {
          return new ResponseEntity<>(new Response(success, message), HttpStatus.OK);
 
      }
+
+    @PutMapping("/setUpUserAccount")
+    public ResponseEntity<Response> setUpUserAccountPersonalDetails(@RequestBody UserDTO userDTO){
+        System.out.println(userDTO.getFirstName());
+        System.out.println(userDTO.getEmail());
+        UserDTO findUser = userService.findUserID(userDTO);
+        UserDTO setUpPersonalAccount = userService.setUpPersonalAccount(findUser,userDTO);
+
+        if(setUpPersonalAccount!=null){
+            success = true;
+        }
+        String message = success ? "User saved successfully" : "Error saving user";
+        return new ResponseEntity<>(new Response(success, message), HttpStatus.OK);
+    }
 
 
 }

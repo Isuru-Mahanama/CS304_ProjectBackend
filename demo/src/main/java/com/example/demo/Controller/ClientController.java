@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins ="*")
 public class ClientController {
 
+    private String loggedInEmail ="";
+    private ClientDTO clientLoggedIn = null;
     boolean success = false;
     @Autowired
     private ClientService clientService;
@@ -22,11 +24,11 @@ public class ClientController {
     private UserService userService;
     @PostMapping("/setUpClient")
     public ResponseEntity<Response> createClient(@RequestBody UserDTO userDTO){
-        System.out.println(userDTO.getEmail());
+        this.loggedInEmail = userDTO.getEmail();
         UserDTO userID = userService.findUserID(userDTO);
 
         ClientDTO  savedClient = clientService.saveClient(userID.getUserID());
-
+        this.clientLoggedIn = savedClient;
         if(savedClient!=null){
             success = true;
         }
@@ -34,4 +36,15 @@ public class ClientController {
         return new ResponseEntity<>(new Response(success, message), HttpStatus.OK);
     }
 
+    @PutMapping("/setUpClientAccount")
+    public ResponseEntity<Response> setUpClientAccount() {
+        ClientDTO clientAccountSetUp = this.clientLoggedIn;
+        ClientDTO clientAccount = clientService.accountSetUpClient(clientAccountSetUp);
+
+        if(clientAccount!=null){
+            success = true;
+        }
+        String message = success ? "User saved successfully" : "Error saving user";
+        return new ResponseEntity<>(new Response(success, message), HttpStatus.OK);
+    }
 }
