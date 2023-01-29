@@ -13,13 +13,17 @@ import java.util.Optional;
 @Service
 @Transactional
 public class UserService {
+
+    protected UserDTO loggedUser = null;
     @Autowired
     private UserRepo userRepo;
     @Autowired
     private ModelMapper modelMapper;
     public UserDTO saveUser(UserDTO userDTO){
-    userRepo.save(modelMapper.map(userDTO, User.class));
-    return userDTO;
+
+        this.loggedUser = userDTO;
+        userRepo.save(modelMapper.map(userDTO, User.class));
+        return userDTO;
 }
 
     public UserDTO saveUserName(UserDTO userDTO){
@@ -47,8 +51,10 @@ public class UserService {
     public UserDTO setUpPersonalAccount(UserDTO findUser, UserDTO userDTO) {
 
         if(findUser != null){
-            findUser.setFirstName(userDTO.getFirstName());
-            User findUserClass = this.modelMapper.map(findUser,User.class);
+            Long userID = findUser.getUserID();
+            userDTO.setUserID(userID);
+            userDTO.setUserName(findUser.getUserName());
+            User findUserClass = this.modelMapper.map(userDTO,User.class);
             userRepo.save(findUserClass);
             return userDTO;
         }

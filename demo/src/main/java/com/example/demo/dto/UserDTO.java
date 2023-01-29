@@ -15,11 +15,14 @@ public class UserDTO {
     private String email;
     private String firstName;
     private String lastName;
+    private String displayEmail;
     private int phoneNumber;
-    private String houseNo;
-    private String street;
-    private String city;
+    private String postalCode;
     private String userName;
+
+    private String company;
+
+    private String location;
 
 
 }

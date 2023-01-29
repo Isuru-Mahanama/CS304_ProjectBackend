@@ -11,11 +11,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value ="api/v1/client")
+@RequestMapping(value ="api/v1/user")
 @CrossOrigin(origins ="*")
 public class ClientController {
 
-    private String loggedInEmail ="";
+    public String loggedInEmail ="";
     private ClientDTO clientLoggedIn = null;
     boolean success = false;
     @Autowired

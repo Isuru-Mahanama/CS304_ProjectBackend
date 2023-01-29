@@ -3,6 +3,7 @@ package com.example.demo.Model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.stereotype.Indexed;
 
 
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Indexed;
 @Table(uniqueConstraints={
         @UniqueConstraint(columnNames = {"email"})
 },indexes = @Index(name = "idx_userID_email",columnList = "userID, email"))
+@DynamicUpdate
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,14 +23,26 @@ public class User {
     private String email;
     private String firstName;
     private String lastName;
+    private String displayEmail;
     private int phoneNumber;
-    private String houseNo;
-    private String street;
-    private String city;
+
+    private String postalCode;
     private String userName;
+
+    private String company;
+
+    private String location;
 
     @OneToOne
     @PrimaryKeyJoinColumn
     private Client client;
+
+    @OneToOne
+    @PrimaryKeyJoinColumn
+    private Address address;
+
+    @OneToOne
+    @PrimaryKeyJoinColumn
+    private Language language;
 
 }
