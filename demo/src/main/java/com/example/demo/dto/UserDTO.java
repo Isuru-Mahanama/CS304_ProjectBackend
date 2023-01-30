@@ -23,6 +23,7 @@ public class UserDTO {
     private String company;
 
     private String location;
+    private String timeZone;
 
 
 }

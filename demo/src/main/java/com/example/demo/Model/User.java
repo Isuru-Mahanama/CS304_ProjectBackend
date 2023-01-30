@@ -32,6 +32,7 @@ public class User {
     private String company;
 
     private String location;
+    private String timeZone;
 
     @OneToOne
     @PrimaryKeyJoinColumn
