@@ -1,8 +1,8 @@
 package com.example.demo.Service;
 
 import com.example.demo.Model.Address;
+import com.example.demo.dto.AddreessLanguageDTO;
 import com.example.demo.dto.AddressDTO;
-import com.example.demo.dto.AddressEmailDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.repo.AddreessRepo;
 import org.modelmapper.ModelMapper;
@@ -19,14 +19,14 @@ public class AddressService {
     @Autowired
     private AddreessRepo addreessRepo;
 
-    public AddressDTO saveAddress(UserDTO userDTO, AddressEmailDTO addressEmailDTO) {
+    public AddressDTO saveAddress(UserDTO userDTO, AddreessLanguageDTO addreessLanguageDTO) {
 
         AddressDTO addressDTO = new AddressDTO();
         addressDTO.setUserAddressID(userDTO.getUserID());
-        addressDTO.setStreetAddress(addressEmailDTO.getStreetAddress());
-        addressDTO.setCity(addressEmailDTO.getCity());
-        addressDTO.setCountry(addressEmailDTO.getCountry());
-        addressDTO.setProvince(addressEmailDTO.getProvince());
+        addressDTO.setStreetAddress(addreessLanguageDTO.getStreetAddress());
+        addressDTO.setCity(addreessLanguageDTO.getCity());
+        addressDTO.setCountry(addreessLanguageDTO.getCountry());
+        addressDTO.setProvince(addreessLanguageDTO.getProvince());
         addreessRepo.save(modelMapper.map(addressDTO, Address.class));
         return addressDTO;
     }

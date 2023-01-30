@@ -4,7 +4,7 @@ package com.example.demo.Model;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.stereotype.Indexed;
+
 
 
 @Entity
