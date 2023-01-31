@@ -46,4 +46,9 @@ public class User {
     @PrimaryKeyJoinColumn
     private Language language;
 
+    @OneToOne
+    @PrimaryKeyJoinColumn
+    private Freelancer freelancer;
+
+
 }

@@ -48,8 +48,7 @@ public class UserController {
 
     @PutMapping("/setUpUserAccount")
     public ResponseEntity<Response> setUpUserAccountPersonalDetails(@RequestBody UserDTO userDTO){
-        System.out.println(userDTO.getLastName());
-        System.out.println(userDTO.getEmail());
+
         UserDTO findUser = userService.findUserID(userDTO);
         UserDTO setUpPersonalAccount = userService.setUpPersonalAccount(findUser,userDTO);
 

@@ -37,14 +37,17 @@ public class ClientController {
     }
 
     @PutMapping("/setUpClientAccount")
-    public ResponseEntity<Response> setUpClientAccount() {
-        ClientDTO clientAccountSetUp = this.clientLoggedIn;
-        ClientDTO clientAccount = clientService.accountSetUpClient(clientAccountSetUp);
+    public ResponseEntity<Response> setUpClientAccount(@RequestBody ClientDTO clientDTO) {
+        System.out.println("Client"+clientDTO);
+        ClientDTO findClient = clientService.findUserID(clientDTO);
 
-        if(clientAccount!=null){
+        ClientDTO setUpClientAccount = clientService.accountSetUpClient(findClient);
+
+        if(setUpClientAccount!=null){
             success = true;
         }
-        String message = success ? "User saved successfully" : "Error saving user";
+        String message = success ? "Client saved successfully" : "Error saving client";
         return new ResponseEntity<>(new Response(success, message), HttpStatus.OK);
     }
 }
+

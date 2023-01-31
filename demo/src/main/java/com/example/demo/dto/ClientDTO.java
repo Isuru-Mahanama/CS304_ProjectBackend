@@ -9,5 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ClientDTO {
     private Long clientID;
-    private String displayEmail;
+    private String email;
+    private String companyDetails;
+    private String websiteLink;
+    private String faceBookLink;
+    private String instagramLink;
+
 }

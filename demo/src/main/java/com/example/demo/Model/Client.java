@@ -15,5 +15,9 @@ import lombok.NoArgsConstructor;
 public class Client {
     @Id
     private Long clientID;
-    private String displayEmail;
+    private String companyDetails;
+    private String websiteLink;
+    private String faceBookLink;
+    private String instagramLink;
+
 }
