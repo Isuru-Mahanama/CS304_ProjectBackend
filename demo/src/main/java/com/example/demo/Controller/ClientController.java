@@ -49,5 +49,17 @@ public class ClientController {
         String message = success ? "Client saved successfully" : "Error saving client";
         return new ResponseEntity<>(new Response(success, message), HttpStatus.OK);
     }
+
+    @GetMapping("/checkclienttable/{email}")
+    public boolean checkTable(@RequestBody ClientDTO clientDTO) {
+        System.out.println("hh");
+        ClientDTO findClient = clientService.findUserID(clientDTO);
+        boolean isTableFilled = clientService.isTableFilled(findClient.getClientID());
+        if (isTableFilled) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 

@@ -2,7 +2,6 @@ package com.example.demo.Service;
 
 import com.example.demo.Model.*;
 import com.example.demo.dto.ClientDTO;
-import com.example.demo.dto.UserDTO;
 import com.example.demo.repo.ClientRepo;
 import com.example.demo.repo.UserRepo;
 import org.modelmapper.ModelMapper;
@@ -10,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -42,5 +42,10 @@ public class ClientService {
             return clientDTO;
         }
         return null;
+    }
+
+    public boolean isTableFilled(Long clientID) {
+        Optional<Client> client = clientRepo.findById(clientID);
+        return !client.isEmpty();
     }
 }
