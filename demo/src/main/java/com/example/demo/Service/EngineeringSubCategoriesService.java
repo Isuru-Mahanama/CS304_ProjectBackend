@@ -8,9 +8,12 @@ import com.example.demo.repo.EngineeringCategoriesRepo;
 import com.example.demo.repo.LanguageLevelDetailsRepo;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -35,5 +38,10 @@ public class EngineeringSubCategoriesService {
         engineeringCategoriesRepo.save(modelMapper.map(e4, EngineeringSubcategories.class));
         engineeringCategoriesRepo.save(modelMapper.map(e5, EngineeringSubcategories.class));
 
+    }
+
+    public List<EngineeringCategoriesDTO> getAllEngineeringSubCategory() {
+        List<EngineeringSubcategories> engineeringSubcategories = engineeringCategoriesRepo.findAll();
+        return modelMapper.map(engineeringSubcategories, new TypeToken<List<EngineeringCategoriesDTO>>(){}.getType());
     }
 }

@@ -1,16 +1,17 @@
 package com.example.demo.Service;
 
 import com.example.demo.Model.ArchitectureSubCategory;
-import com.example.demo.Model.ConstructionSubCategories;
 import com.example.demo.dto.ArchitectureSubCategoriesDTO;
 import com.example.demo.dto.ConstructionSubCategoriesDTO;
 import com.example.demo.repo.AchitectureSubCategoriesRepo;
-import com.example.demo.repo.ConstructionSubCategoriesRepo;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -43,5 +44,10 @@ public class ArchitectureSubCategoriesService {
         achitectureSubCategoriesRepo.save(modelMapper.map(c8,  ArchitectureSubCategory.class));
 
 
+    }
+
+    public List<ArchitectureSubCategoriesDTO> getAllSubCategories() {
+        List<ArchitectureSubCategory> architectureSubCategories = achitectureSubCategoriesRepo.findAll();
+        return modelMapper.map(architectureSubCategories,new TypeToken<List<ArchitectureSubCategoriesDTO>>(){}.getType());
     }
 }

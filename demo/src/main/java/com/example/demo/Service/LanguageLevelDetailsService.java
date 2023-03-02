@@ -1,11 +1,8 @@
 package com.example.demo.Service;
 
-
-import com.example.demo.Model.LanguageDetails;
 import com.example.demo.Model.LanguageLevelDetails;
 import com.example.demo.dto.LaguageLevelDetailsDTO;
 
-import com.example.demo.dto.LanguageDetailsDTO;
 import com.example.demo.repo.LanguageLevelDetailsRepo;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
