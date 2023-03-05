@@ -1,21 +1,19 @@
 package com.example.demo.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
-@Table
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-
+@Table(uniqueConstraints={
+        @UniqueConstraint(columnNames = {"categoryID"})
+},indexes = @Index(name = "idx_categoryID_categoryName",columnList = "categoryID, categoryName"))
 public class ProjectCategories {
     @Id
     private Long categoryID;

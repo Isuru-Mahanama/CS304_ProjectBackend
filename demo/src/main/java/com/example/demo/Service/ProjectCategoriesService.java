@@ -8,9 +8,12 @@ import com.example.demo.repo.LanguageLevelDetailsRepo;
 import com.example.demo.repo.ProjectCategoriesRepo;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -31,5 +34,10 @@ public class ProjectCategoriesService {
         projectCategoriesRepo.save(modelMapper.map(c1, ProjectCategories.class));
         projectCategoriesRepo.save(modelMapper.map(c2, ProjectCategories.class));
         projectCategoriesRepo.save(modelMapper.map(c3, ProjectCategories.class));
+    }
+
+    public List<ProjectCategoriesDTO> getAllCategories() {
+        List<ProjectCategories> projectCategories = projectCategoriesRepo.findAll();
+        return modelMapper.map(projectCategories,new TypeToken<List<ProjectCategoriesDTO>>(){}.getType());
     }
 }
