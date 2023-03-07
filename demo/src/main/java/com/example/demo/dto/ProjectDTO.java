@@ -14,15 +14,22 @@ import java.util.List;
 @Data
 public class ProjectDTO {
     private Long projectID;
+    private String email;
     private String projectTitle;
     private String smallDescription;
     private String moreDescription;
     private String category;
     @JsonProperty("Ecategory")
     private List<SubcategoryDTO> Ecategory;
+    @JsonProperty("Acategory")
+    private List<SubcategoryDTO> Acategory;
+    @JsonProperty("Ccategory")
+    private List<SubcategoryDTO> Ccategory;
     private Date startDate;
     private Date endDate;
+
     private String projectPrize;
-   // private byte[] projectFile;
+
+
 
 }

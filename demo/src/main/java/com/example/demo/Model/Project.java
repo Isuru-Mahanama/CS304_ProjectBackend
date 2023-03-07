@@ -23,7 +23,12 @@ public class Project {
     private String smallDescription;
     private String moreDescription;
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Subcategory> subcategoryList;
+    private List<Subcategory> esubcategory;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Subcategory> asubcategory;
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Subcategory> csubcategory;
 
     private Date startDate;
     private Date endDate;
@@ -32,9 +37,9 @@ public class Project {
     // Define the relationship between Project and Ecategory entities
 
 
-  //  private List<ProjectRelatedCategories> subCategories;
-  //  @Lob
-   // private byte[] projectFile;
+
+ //   @Lob
+   // private String[] fileByteArray;
 
 
 
