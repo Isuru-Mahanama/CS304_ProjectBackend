@@ -25,15 +25,15 @@ public class ConstructionSubCategoriesService {
     @PostConstruct
     public void run() throws Exception
     {
-        ConstructionSubCategoriesDTO c1 = new ConstructionSubCategoriesDTO(1L,"General Requirement");
-        ConstructionSubCategoriesDTO c2 = new ConstructionSubCategoriesDTO(2L,"Site Works");
-        ConstructionSubCategoriesDTO c3 = new ConstructionSubCategoriesDTO(3L," Concrete");
-        ConstructionSubCategoriesDTO c4 = new ConstructionSubCategoriesDTO(4L,"Masonry");
-        ConstructionSubCategoriesDTO c5 = new ConstructionSubCategoriesDTO(5L," Metals");
-        ConstructionSubCategoriesDTO c6 = new ConstructionSubCategoriesDTO(6L," Wood and Plastics");
-        ConstructionSubCategoriesDTO c7 = new ConstructionSubCategoriesDTO(7L," Thermal and Moisture Protection");
-        ConstructionSubCategoriesDTO c8 = new ConstructionSubCategoriesDTO(8L," Doors and Windows");
-        ConstructionSubCategoriesDTO c9 = new ConstructionSubCategoriesDTO(9L," Finishes");
+        ConstructionSubCategoriesDTO c1 = new ConstructionSubCategoriesDTO(1000L,"General Requirement");
+        ConstructionSubCategoriesDTO c2 = new ConstructionSubCategoriesDTO(1001L,"Site Works");
+        ConstructionSubCategoriesDTO c3 = new ConstructionSubCategoriesDTO(1002L," Concrete");
+        ConstructionSubCategoriesDTO c4 = new ConstructionSubCategoriesDTO(1003L,"Masonry");
+        ConstructionSubCategoriesDTO c5 = new ConstructionSubCategoriesDTO(1004L," Metals");
+        ConstructionSubCategoriesDTO c6 = new ConstructionSubCategoriesDTO(1005L," Wood and Plastics");
+        ConstructionSubCategoriesDTO c7 = new ConstructionSubCategoriesDTO(1006L," Thermal and Moisture Protection");
+        ConstructionSubCategoriesDTO c8 = new ConstructionSubCategoriesDTO(1007L," Doors and Windows");
+        ConstructionSubCategoriesDTO c9 = new ConstructionSubCategoriesDTO(1008L," Finishes");
 
         constructionSubCategoriesRepo.save(modelMapper.map(c1, ConstructionSubCategories.class));
         constructionSubCategoriesRepo.save(modelMapper.map(c2, ConstructionSubCategories.class));

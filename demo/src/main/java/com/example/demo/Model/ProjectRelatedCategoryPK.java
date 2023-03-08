@@ -14,6 +14,6 @@ import java.io.Serializable;
 
 public class ProjectRelatedCategoryPK implements Serializable {
 
-     private Project project;
+     private Long project;
     private Long esubCategoryID;
 }

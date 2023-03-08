@@ -26,11 +26,11 @@ public class EngineeringSubCategoriesService {
     @PostConstruct
     public void run() throws Exception
     {
-        EngineeringCategoriesDTO e1 = new EngineeringCategoriesDTO(1L,"Civil Engineering");
-        EngineeringCategoriesDTO e2 = new EngineeringCategoriesDTO(2L,"Environmental engineering");
-        EngineeringCategoriesDTO e3 = new EngineeringCategoriesDTO(3L,"Geotechnical engineering");
-        EngineeringCategoriesDTO e4 = new EngineeringCategoriesDTO(4L,"Structural engineering");
-        EngineeringCategoriesDTO e5 = new EngineeringCategoriesDTO(5L,"Transport engineering");
+        EngineeringCategoriesDTO e1 = new EngineeringCategoriesDTO(3000L,"Civil Engineering");
+        EngineeringCategoriesDTO e2 = new EngineeringCategoriesDTO(3001L,"Environmental engineering");
+        EngineeringCategoriesDTO e3 = new EngineeringCategoriesDTO(3002L,"Geotechnical engineering");
+        EngineeringCategoriesDTO e4 = new EngineeringCategoriesDTO(3003L,"Structural engineering");
+        EngineeringCategoriesDTO e5 = new EngineeringCategoriesDTO(3004L,"Transport engineering");
 
         engineeringCategoriesRepo.save(modelMapper.map(e1, EngineeringSubcategories.class));
         engineeringCategoriesRepo.save(modelMapper.map(e2, EngineeringSubcategories.class));

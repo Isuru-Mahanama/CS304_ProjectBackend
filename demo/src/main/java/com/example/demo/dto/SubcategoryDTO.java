@@ -1,5 +1,6 @@
 package com.example.demo.dto;
 
+import com.example.demo.Model.Project;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class SubcategoryDTO {
-    private String esubCategoryName;
+
     private Long esubCategoryID;
+    private String esubCategoryName;
+
 }

@@ -31,8 +31,8 @@ public class ProjectController {
     @PostMapping("/postProjectFile")
     public String uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("projectDTO") String projectJson) throws IOException {
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        ProjectDTO projectDTO = objectMapper.readValue(projectJson, ProjectDTO.class);
+       ObjectMapper objectMapper = new ObjectMapper();
+       ProjectDTO projectDTO = objectMapper.readValue(projectJson, ProjectDTO.class);
         projectService.saveProjectDetails(projectDTO);
 
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
