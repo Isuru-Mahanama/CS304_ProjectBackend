@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class PrizeDTO {
-  //  private Long prizeID;
+   private Long prizeID;
     private String prizeType;
     private String projectType;
     private double minimumPrize;
