@@ -22,6 +22,8 @@ import java.util.List;
 @Transactional
 public class ProjectService {
     @Autowired
+    private FileUploadService fileUploadService;
+    @Autowired
     private ProjectRepo projectRepo;
     @Autowired
     private ModelMapper modelMapper;
@@ -29,7 +31,7 @@ public class ProjectService {
     @Autowired
     private SubCategoryService subCategoryService;
 
-    public void saveProjectDetails(ProjectDTO projectJson) {
+    public void saveProjectDetails(ProjectDTO projectJson,String fileName,String filePath) {
 
         System.out.println("In servive class"+projectJson.getAcategory());
 
@@ -37,7 +39,9 @@ public class ProjectService {
         Project project =  projectRepo.save(modelMapper.map(projectJson, Project.class));
         Long projectID = project.getProjectID();
         subCategoryService.saveSubCategories(projectID,projectJson);
-
+       fileUploadService.saveFileDetails(projectID,fileName,filePath);
 
     }
+
+
 }

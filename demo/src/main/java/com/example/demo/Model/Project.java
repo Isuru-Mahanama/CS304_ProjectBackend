@@ -6,9 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
 
 @Table
 @Entity
@@ -27,7 +25,14 @@ public class Project {
 
     private Date startDate;
     private Date endDate;
+    private String prize;
+    private String prizeminimum;
+    private String prizemaximum;
+
     private String projectPrize;
+    @OneToOne
+    @PrimaryKeyJoinColumn
+    private FileUplod fileUplod;
 
 
 

@@ -20,8 +20,7 @@ import java.io.IOException;
 @RequestMapping(value ="api/v1/user")
 @CrossOrigin(origins ="*")
 public class ProjectController {
-    @Autowired
-    private FileUploadService fileUploadService;
+
     @Autowired
     private ProjectService projectService;
     @Autowired
@@ -33,10 +32,12 @@ public class ProjectController {
 
        ObjectMapper objectMapper = new ObjectMapper();
        ProjectDTO projectDTO = objectMapper.readValue(projectJson, ProjectDTO.class);
-        projectService.saveProjectDetails(projectDTO);
+
 
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         String filePath = "D:/ServerForMyProject/" + file.getOriginalFilename();
+
+        projectService.saveProjectDetails(projectDTO,fileName,filePath);
 
         File convertFile = new File(filePath);
 
