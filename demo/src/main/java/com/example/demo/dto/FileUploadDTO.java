@@ -12,5 +12,7 @@ public class FileUploadDTO {
     private String fileName;
     private String fileType;
     private byte[] file;
+    private String imageName;
+    private String imagePath;
 
 }

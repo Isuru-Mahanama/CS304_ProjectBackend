@@ -1,5 +1,6 @@
 package com.example.demo.Service;
 
+import com.example.demo.Model.Prize;
 import com.example.demo.Model.Project;
 import com.example.demo.Model.Subcategory;
 import com.example.demo.dto.ProjectDTO;
@@ -17,10 +18,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
 public class ProjectService {
+    @Autowired
+    private PrizeService prizeService;
     @Autowired
     private FileUploadService fileUploadService;
     @Autowired
@@ -31,15 +35,21 @@ public class ProjectService {
     @Autowired
     private SubCategoryService subCategoryService;
 
-    public void saveProjectDetails(ProjectDTO projectJson,String fileName,String filePath) {
+    public void saveProjectDetails(ProjectDTO projectJson,String fileName,String filePath,String imageName,String imagePath) {
 
         System.out.println("In servive class"+projectJson.getAcategory());
+        Optional<Prize> prize = prizeService.findProjectPrizeDetails(projectJson.getProjectType());
+
+        projectJson.setPrizeminimum(Double.toString(prize.get().getMinimumPrize()));
+        projectJson.setPrizemaximum(Double.toString(prize.get().getMaximumPrize()));
+        projectJson.setCurrencyType(prize.get().getPrizeType());
+        projectJson.setProjectType(prize.get().getProjectType());
 
         //subCategoryRepo.save(modelMapper.map(projectJson.getAcategory(), Subcategory.class));
         Project project =  projectRepo.save(modelMapper.map(projectJson, Project.class));
         Long projectID = project.getProjectID();
         subCategoryService.saveSubCategories(projectID,projectJson);
-       fileUploadService.saveFileDetails(projectID,fileName,filePath);
+        fileUploadService.saveFileDetails(projectID,fileName,filePath,imageName,imagePath);
 
     }
 

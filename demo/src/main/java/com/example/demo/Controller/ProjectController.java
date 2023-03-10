@@ -28,16 +28,20 @@ public class ProjectController {
 
 
     @PostMapping("/postProjectFile")
-    public String uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("projectDTO") String projectJson) throws IOException {
+    public String uploadFile(@RequestParam("file") MultipartFile file,@RequestParam("image") MultipartFile image, @RequestParam("projectDTO") String projectJson) throws IOException {
 
        ObjectMapper objectMapper = new ObjectMapper();
        ProjectDTO projectDTO = objectMapper.readValue(projectJson, ProjectDTO.class);
 
-
+        System.out.println(projectDTO.getProjectType());
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         String filePath = "D:/ServerForMyProject/" + file.getOriginalFilename();
 
-        projectService.saveProjectDetails(projectDTO,fileName,filePath);
+        //Saving the image
+        String imageName = StringUtils.cleanPath(image.getOriginalFilename());
+        String imagePath = "D:/ImageServer/" + image.getOriginalFilename();
+
+        projectService.saveProjectDetails(projectDTO,fileName,filePath,imageName,imagePath);
 
         File convertFile = new File(filePath);
 
@@ -50,7 +54,21 @@ public class ProjectController {
         {
             exe.printStackTrace();
         }
-       return "file has uploaded successfully";
+
+       //Image saving
+        File convertImage = new File(imagePath);
+        convertImage.createNewFile();
+
+        try(FileOutputStream fout = new FileOutputStream(convertImage))
+        {
+            fout.write(image.getBytes());
+        }
+        catch(Exception exe)
+        {
+            exe.printStackTrace();
+        }
+
+        return "file has uploaded successfully";
     }
 }
 

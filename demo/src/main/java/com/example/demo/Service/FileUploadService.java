@@ -25,8 +25,8 @@ public class FileUploadService {
     @Autowired
     private FileUploadRepo fileUploadRepo;
 
-    public void saveFileDetails(Long projectID, String fileName, String filePath) {
-        FileUplod fileUplod= new FileUplod(projectID,fileName,filePath);
+    public void saveFileDetails(Long projectID, String fileName, String filePath,String imageName,String imagePath) {
+        FileUplod fileUplod= new FileUplod(projectID,fileName,filePath,imageName,imagePath);
         fileUploadRepo.save(fileUplod);
     }
 }

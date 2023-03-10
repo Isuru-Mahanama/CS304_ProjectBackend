@@ -6,12 +6,12 @@ import com.example.demo.dto.PrizeDTO;
 import com.example.demo.repo.PrizeRepo;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -51,6 +51,13 @@ public class PrizeService {
 
     public List<Prize> getAllPrizes() {
         return  prizeRepo.findAll();
+
+    }
+
+
+    public Optional<Prize> findProjectPrizeDetails(String projectType) {
+        long projectTypeId = Long.parseLong(projectType);
+        return prizeRepo.findById(projectTypeId);
 
     }
 }

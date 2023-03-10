@@ -27,11 +27,11 @@ public class ProjectDTO {
     private List<SubcategoryDTO> Ccategory;
     private Date startDate;
     private Date endDate;
-    private String prize;
+    private String projectType;
     private String prizeminimum;
     private String prizemaximum;
 
-    private String projectPrize;
+    private String currencyType;
 
 
 

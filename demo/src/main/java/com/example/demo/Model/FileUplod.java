@@ -15,4 +15,7 @@ public class FileUplod {
     private Long projectID;
     private String fileName;
     private String filePath;
+    private String imageName;
+    private String imagePath;
+
 }
