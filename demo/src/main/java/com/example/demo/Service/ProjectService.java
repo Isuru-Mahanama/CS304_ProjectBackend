@@ -13,9 +13,16 @@ import com.example.demo.repo.SubCategoryRepo;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Optional;
@@ -51,6 +58,11 @@ public class ProjectService {
         subCategoryService.saveSubCategories(projectID,projectJson);
         fileUploadService.saveFileDetails(projectID,fileName,filePath,imageName,imagePath);
 
+    }
+
+
+    public List<Project> getAllProjectDetails() {
+        return projectRepo.findAll();
     }
 
 
