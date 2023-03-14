@@ -12,11 +12,11 @@ import lombok.NoArgsConstructor;
 @Data
 public class FreelancerEducationDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long EducationID;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "freelancerID")
-    private Freelancer freelancer;
+ //   @ManyToOne(fetch = FetchType.LAZY)
+   // @JoinColumn(name = "freelancerID")
+  //  private Freelancer freelancer;
     private String major;
     private String school;
     private String title;

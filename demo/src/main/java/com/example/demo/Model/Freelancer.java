@@ -16,10 +16,13 @@ import java.util.List;
 public class Freelancer {
     @Id
     private Long freelancerID;
-    @OneToMany(mappedBy = "freelancer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private String moreDetail;
+    @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "fk_freelancer_id")
     private List<FreelancerEducationDetails> freelancerEducationDetails = new ArrayList<>();
-    @OneToMany(mappedBy = "freelancerID", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<FreelancerCeritficatesDetails> freelancerCeritficatesDetails = new ArrayList<>();
+    @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "fk_c_id")
+    private List<FreelancerCeritficatesDetails> cerificates= new ArrayList<>();
 
 }
 

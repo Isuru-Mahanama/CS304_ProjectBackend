@@ -12,11 +12,11 @@ import lombok.NoArgsConstructor;
 @Data
 public class FreelancerCeritficatesDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long FreelancerCertificatesDetails;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "freelancerID")
-    private Freelancer freelancerID;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long FreelancerCertificatesDetailsID;
+   // @ManyToOne(fetch = FetchType.LAZY)
+   // @JoinColumn(name = "freelancerID")
+   // private Freelancer freelancerID;
     private String certificate;
     private String cerifiedfrom;
     private String year;
