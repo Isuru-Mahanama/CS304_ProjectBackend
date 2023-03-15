@@ -1,12 +1,13 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Model.Project;
+import com.example.demo.Model.Subcategory;
 import com.example.demo.Service.ProjectService;
 
+import com.example.demo.Service.SubCategoryService;
 import com.example.demo.dto.FileResponseDTO;
 import com.example.demo.dto.ProjectDTO;
 
-import com.example.demo.repo.ProjectCategoriesRepo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -20,14 +21,17 @@ import org.springframework.web.bind.annotation.*;
 import java.io.*;
 import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.Base64;
+
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value ="api/v1/user")
 @CrossOrigin(origins ="*")
 public class ProjectController {
 
+    @Autowired
+    private SubCategoryService subCategoryService;
     @Autowired
     private ProjectService projectService;
     @Autowired
@@ -138,7 +142,16 @@ public class ProjectController {
         return responseEntity;
     }
 
+    @GetMapping("/viewallProjectDetails/{projectID}")
+    public String getallprojectDetails(@PathVariable String projectID){
+        Optional<Project> project = projectService.getProjectsByID(Long.parseLong(projectID));
+        List<Subcategory> subcategories = subCategoryService.findProjectSubCategories(Long.parseLong(projectID));
+        System.out.print(project);
+        System.out.print(subcategories);
 
+        return "bll";
+
+    }
 
 }
 

@@ -2,28 +2,16 @@ package com.example.demo.Service;
 
 import com.example.demo.Model.Prize;
 import com.example.demo.Model.Project;
-import com.example.demo.Model.Subcategory;
 import com.example.demo.dto.ProjectDTO;
 
-import com.example.demo.dto.SubcategoryDTO;
 import com.example.demo.repo.ProjectRepo;
 //import com.example.demo.repo.SubCategoryRepo;
-import com.example.demo.repo.SubCategoryRepo;
 
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,4 +54,7 @@ public class ProjectService {
     }
 
 
+    public Optional<Project> getProjectsByID(Long projectID) {
+        return projectRepo.findById(projectID);
+    }
 }

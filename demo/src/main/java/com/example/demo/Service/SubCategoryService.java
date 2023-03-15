@@ -21,6 +21,7 @@ public class SubCategoryService {
     @Autowired
     private ModelMapper modelMapper;
 
+
     public void saveSubCategories(Long projectID, ProjectDTO projectJson) {
         List<Subcategory> asubcategories = modelMapper.map(projectJson.getAcategory(),List.class);
         List<Subcategory> esubcategories = modelMapper.map(projectJson.getEcategory(),List.class);
@@ -61,5 +62,9 @@ public class SubCategoryService {
             subCategoryRepo.save(sub);
         }
 
+    }
+
+    public List<Subcategory> findProjectSubCategories(long parseLong) {
+        return subCategoryRepo.findByProject(parseLong);
     }
 }
