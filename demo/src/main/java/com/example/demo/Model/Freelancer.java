@@ -24,5 +24,10 @@ public class Freelancer {
     @JoinColumn(name = "fk_c_id")
     private List<FreelancerCeritficatesDetails> cerificates= new ArrayList<>();
 
+    @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "fk_c_id")
+    private List<FreelancerCategoryDetails> categoryDetails= new ArrayList<>();
+    private String  startDate;
+    private String endDate;
 }
 
