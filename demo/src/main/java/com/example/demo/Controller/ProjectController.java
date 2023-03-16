@@ -8,7 +8,9 @@ import com.example.demo.Service.SubCategoryService;
 import com.example.demo.dto.FileResponseDTO;
 import com.example.demo.dto.ProjectDTO;
 
+import com.example.demo.dto.ViewProjceDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -20,16 +22,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.util.ArrayList;
-
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping(value ="api/v1/user")
 @CrossOrigin(origins ="*")
 public class ProjectController {
 
+    @Autowired
+    private ModelMapper modelMapper;
     @Autowired
     private SubCategoryService subCategoryService;
     @Autowired
@@ -75,16 +76,14 @@ public class ProjectController {
     public List<Project> getAllprojectDetails(){
         return projectService.getAllProjectDetails();
     }
-    @GetMapping("/download")
-    public List<ResponseEntity<Object>>  downloadFile() throws IOException {
-        List<Project> projects = projectService.getAllProjectDetails();
-        List<ResponseEntity<Object>> responseEntities = new ArrayList<>();
-        System.out.println(projects.get(0).getFileUplod().getFilePath());
-        ResponseEntity<Object> responseEntity = null;
-        for (Project p : projects) {
-            String filename = p.getFileUplod().getFilePath();
-            System.out.println(filename);
-            File file = new File(filename);
+
+   @GetMapping("/downloadFile/{projectID}")
+    public ResponseEntity<Object>  downloadFile(@PathVariable String projectID) throws IOException {
+            System.out.println(projectID);
+            Optional<Project> project = projectService.getProjectsByID(Long.parseLong(projectID));
+            System.out.println(project.get().getFileUplod().getFilePath());
+
+            File file = new File(project.get().getFileUplod().getFilePath());
             InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
             //  ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(file.toPath()));
 
@@ -95,19 +94,19 @@ public class ProjectController {
             headers.add("Pragma", "no-cache");
             headers.add("Expires", "0");
 
-            responseEntity = ResponseEntity.ok().headers(headers)
+            ResponseEntity<Object> responseEntity = ResponseEntity.ok().headers(headers)
                     .contentLength(file.length())
                     .contentType(MediaType.parseMediaType("application/txt")).body(resource);
 
 
-             responseEntities.add(responseEntity);
+           return responseEntity;
         }
         //  System.out.println(responseEntities);
 
-            return responseEntities;
-    }
 
-    @GetMapping("/downloadImages")
+
+
+  ///  @GetMapping("/downloadFile")
     public List<byte[]> downloadFiles() throws IOException {
         List<Project> projects = projectService.getAllProjectDetails();
         List<byte[]> fileContentsList = new ArrayList<>();
@@ -143,13 +142,17 @@ public class ProjectController {
     }
 
     @GetMapping("/viewallProjectDetails/{projectID}")
-    public String getallprojectDetails(@PathVariable String projectID){
+    public Map<String, Object> getallprojectDetails(@PathVariable String projectID){
         Optional<Project> project = projectService.getProjectsByID(Long.parseLong(projectID));
         List<Subcategory> subcategories = subCategoryService.findProjectSubCategories(Long.parseLong(projectID));
         System.out.print(project);
         System.out.print(subcategories);
 
-        return "bll";
+        Map<String, Object> response = new HashMap<>();
+        response.put("project", project);
+        response.put("subcategories", subcategories);
+
+        return response;
 
     }
 

@@ -4,15 +4,20 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.util.Date;
 
 
-@Table
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Table(uniqueConstraints={
+        @UniqueConstraint(columnNames = {"projectID"})
+},indexes = @Index(name = "projectID",columnList = "projectID"))
+@DynamicUpdate
 public class Project {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
