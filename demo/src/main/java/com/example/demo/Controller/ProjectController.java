@@ -1,7 +1,9 @@
 package com.example.demo.Controller;
 
+import com.example.demo.Model.CurrencyType;
 import com.example.demo.Model.Project;
 import com.example.demo.Model.Subcategory;
+import com.example.demo.Service.CurrencyService;
 import com.example.demo.Service.ProjectService;
 
 import com.example.demo.Service.SubCategoryService;
@@ -9,6 +11,7 @@ import com.example.demo.dto.FileResponseDTO;
 import com.example.demo.dto.ProjectDTO;
 
 import com.example.demo.dto.ViewProjceDTO;
+import com.example.demo.repo.CurrencyRepo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +40,12 @@ public class ProjectController {
     private ProjectService projectService;
     @Autowired
     private FileController fileController;
+
+    @Autowired
+    private CurrencyService currencyService;
+    @Autowired
+    private CurrencyRepo currencyRepo;
+
     @PostMapping("/postProjectFile")
     public String uploadFile(@RequestParam("file") MultipartFile file,@RequestParam("image") MultipartFile image, @RequestParam("projectDTO") String projectJson) throws Exception {
 
@@ -154,6 +163,17 @@ public class ProjectController {
 
         return response;
 
+    }
+    @GetMapping("/getAllProjectDetails/{passedValue}")
+    public Map<String, Object> getiingCurencyDetails(@PathVariable String passedValue){
+        System.out.println("hi");
+        List<Subcategory> subcategory = subCategoryService.findProjectSubCategories(Long.parseLong(passedValue));
+        List<CurrencyType> currencyTypes = currencyService.getAllCurencyTYpes();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("subcateogry", subcategory);
+        response.put("currencyTypes", currencyTypes);
+        return  response;
     }
 
 }

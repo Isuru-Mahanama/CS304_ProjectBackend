@@ -6,8 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 
+import java.util.ArrayList;
 import java.util.Date;
-
+import java.util.List;
 
 
 @Entity
@@ -39,6 +40,8 @@ public class Project {
     @PrimaryKeyJoinColumn
     private FileUplod fileUplod;
 
-
+  /*  @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "projectIDD")
+    private List<ApplyForTheProject> projectIDD= new ArrayList<>();*/
 
 }

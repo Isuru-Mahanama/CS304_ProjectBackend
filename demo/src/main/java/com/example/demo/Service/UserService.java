@@ -19,10 +19,14 @@ public class UserService {
     private UserRepo userRepo;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private ApplicationService applicationService;
     public UserDTO saveUser(UserDTO userDTO){
 
         this.loggedUser = userDTO;
-        userRepo.save(modelMapper.map(userDTO, User.class));
+        User user = userRepo.save(modelMapper.map(userDTO, User.class));
+
+        applicationService.saveLogedUser(user.getUserID());
         return userDTO;
 }
 
