@@ -1,6 +1,7 @@
 package com.example.demo.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
 public class UserDTO {
 
     private Long userID;
@@ -24,6 +26,8 @@ public class UserDTO {
 
     private String location;
     private String timeZone;
+    private String password;
+
 
 
 }

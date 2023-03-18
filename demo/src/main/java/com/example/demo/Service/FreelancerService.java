@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @Transactional
 public class FreelancerService {
@@ -22,5 +24,9 @@ public class FreelancerService {
         freelancerDTO.setFreelancerID(userID);
         freelancerRepo.save(modelMapper.map(freelancerDTO, Freelancer.class));
         return freelancerDTO;
+    }
+
+    public Optional<Freelancer> getAllDetals(long userID) {
+        return freelancerRepo.findById(userID);
     }
 }

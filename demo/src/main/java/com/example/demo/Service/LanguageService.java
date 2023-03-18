@@ -1,9 +1,7 @@
 package com.example.demo.Service;
 
-import com.example.demo.Model.Address;
 import com.example.demo.Model.Language;
 import com.example.demo.dto.AddreessLanguageDTO;
-import com.example.demo.dto.AddressDTO;
 import com.example.demo.dto.LanguageDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.repo.LanguageRepo;
@@ -11,6 +9,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -27,5 +27,10 @@ public class LanguageService {
         System.out.println("Level"+ addreessLanguageDTO.getLanguageLevel());
         languageRepo.save(modelMapper.map(languageDTO, Language.class));
         return languageDTO;
+    }
+
+    public Optional<Language> getLanguagesByID(long userID) {
+        Optional<Language> language = languageRepo.findById(userID);
+        return language;
     }
 }
