@@ -12,6 +12,8 @@ import com.example.demo.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -20,7 +22,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value ="api/v1/user")
-@CrossOrigin(origins ="*")
+@CrossOrigin(origins ="*", allowedHeaders = "*")
 public class FreelancerController {
     private boolean success;
     @Autowired
@@ -31,9 +33,9 @@ public class FreelancerController {
     private LanguageService languageService;
 
     @PostMapping("/setUpFreelancer")
-    public ResponseEntity<Response> createFreelancer(@RequestBody UserDTO userDTO){
+    public ResponseEntity<Response> createFreelancer(@RequestBody UserDTO userDTO,@AuthenticationPrincipal UserDetails userDetails){
 
-        UserDTO userID = userService.findUserID(userDTO);
+        UserDTO userID = userService.findUserID(userDetails);
 
         FreelancerDTO savedFreelancer = freelancerService.saveFreelancer(userID.getUserID());
        // this.clientLoggedIn = savedClient;

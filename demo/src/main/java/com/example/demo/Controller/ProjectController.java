@@ -1,16 +1,14 @@
 package com.example.demo.Controller;
 
-import com.example.demo.Model.CurrencyType;
-import com.example.demo.Model.Project;
-import com.example.demo.Model.Subcategory;
-import com.example.demo.Service.CurrencyService;
-import com.example.demo.Service.ProjectService;
+import com.example.demo.Model.*;
+import com.example.demo.Service.*;
 
-import com.example.demo.Service.SubCategoryService;
 import com.example.demo.dto.FileResponseDTO;
 import com.example.demo.dto.ProjectDTO;
 
+import com.example.demo.dto.UserDTO;
 import com.example.demo.dto.ViewProjceDTO;
+import com.example.demo.repo.ClientRepo;
 import com.example.demo.repo.CurrencyRepo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;
@@ -19,6 +17,8 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +29,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping(value ="api/v1/user")
-@CrossOrigin(origins ="*")
+@CrossOrigin(origins ="*", allowedHeaders = "*")
 public class ProjectController {
 
     @Autowired
@@ -45,14 +45,29 @@ public class ProjectController {
     private CurrencyService currencyService;
     @Autowired
     private CurrencyRepo currencyRepo;
+    @Autowired
+    private FreelancerService freelancerService;
+    @Autowired
+    private LanguageService languageService;
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private AddressService addressService;
+    @Autowired
+    private ClientService clientService;
+    @Autowired
+    private ClientRepo clientRepo;
 
     @PostMapping("/postProjectFile")
-    public String uploadFile(@RequestParam("file") MultipartFile file,@RequestParam("image") MultipartFile image, @RequestParam("projectDTO") String projectJson) throws Exception {
+    public String uploadFile(@AuthenticationPrincipal UserDetails userDetails, @RequestParam("file") MultipartFile file,@RequestParam("image") MultipartFile image, @RequestParam("projectDTO") String projectJson) throws Exception {
+
+        UserDTO user = userService.findUserID(userDetails);
 
         ResponseEntity<FileResponseDTO>  imageDetails= fileController.uploadFile(image);
        ObjectMapper objectMapper = new ObjectMapper();
        ProjectDTO projectDTO = objectMapper.readValue(projectJson, ProjectDTO.class);
-
+        projectDTO.setUserID(user.getUserID());
         System.out.println(projectDTO.getProjectType());
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         String filePath = "D:/ServerForMyProject/" + file.getOriginalFilename();
@@ -82,8 +97,20 @@ public class ProjectController {
     }
 
     @GetMapping("/getAllProjectDetails")
-    public List<Project> getAllprojectDetails(){
-        return projectService.getAllProjectDetails();
+    public Map<String, Object> getAllprojectDetails(@AuthenticationPrincipal UserDetails userDetails){
+        UserDTO user = userService.findUserID(userDetails);
+        Optional<Freelancer> freelancer = freelancerService.getAllDetals(user.getUserID());
+        Optional<Language> language = languageService.getLanguagesByID(user.getUserID());
+        String city = addressService.getCityByID(user.getUserID());
+        List<Project> projects = projectService.getAllProjectDetails();
+        Map<String,Object> response = new HashMap<>();
+        response.put("Projects",projects);
+        response.put("FreelancerDetails",freelancer);
+        response.put("Languages",language);
+        response.put("UserName",user.getUserNames());
+        response.put("City",city);
+        return response;
+
     }
 
    @GetMapping("/downloadFile/{projectID}")
@@ -174,6 +201,26 @@ public class ProjectController {
         response.put("subcateogry", subcategory);
         response.put("currencyTypes", currencyTypes);
         return  response;
+    }
+
+    @GetMapping("/getAllProjectDetailsANDClienDetails")
+    public Map<String, Object> getAllprojectDetailsWithClient(@AuthenticationPrincipal UserDetails userDetails){
+        UserDTO user = userService.findUserID(userDetails);
+        Optional<Client> client = clientService.getAllDetals(user.getUserID());
+        Optional<Language> language = languageService.getLanguagesByID(user.getUserID());
+        String city = addressService.getCityByID(user.getUserID());
+        List<Project> projects = projectService.getAllProjectDetails();
+       // Optional<Freelancer> freelancer = freelancerService.getAllDetals(user.getUserID());
+
+        Map<String,Object> response = new HashMap<>();
+        response.put("Projects",projects);
+        response.put("ClientDetails",client);
+        response.put("Languages",language);
+        response.put("UserName",user.getUserNames());
+        response.put("City",city);
+      //  response.put("Freelncer",freelancer);
+        return response;
+
     }
 
 }

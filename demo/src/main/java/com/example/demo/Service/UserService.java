@@ -1,10 +1,11 @@
 package com.example.demo.Service;
-
+import com.example.demo.Model.Role;
 import com.example.demo.Model.User;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.repo.UserRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,11 +31,13 @@ public class UserService {
         return userDTO;
 }
 
-    public UserDTO saveUserName(UserDTO userDTO){
-        User userByEmail = userRepo.findUserByEmail(userDTO.getEmail());
+    public UserDTO saveUserName(UserDTO userDTO, UserDetails userDetails){
+       // System.out.println(userDTO.getUserNames());
+       // System.out.println(userDetails.getUsername());
+        User userByEmail = userRepo.findUserByEmail(userDetails.getUsername());
 
         if(userByEmail !=null){
-            userByEmail.setUserName(userDTO.getUserName());
+            userByEmail.setUserNames(userDTO.getUserNames());
             userRepo.save(userByEmail);
             return userDTO;
         }
@@ -42,8 +45,9 @@ public class UserService {
         return null;
     }
 
-    public UserDTO findUserID(UserDTO userDTO){
-        User userById = userRepo.findUserByEmail(userDTO.getEmail());
+    public UserDTO findUserID(UserDetails userDetails){
+
+        User userById = userRepo.findUserByEmail(userDetails.getUsername());
 
         if(userById != null){
             return this.modelMapper.map(userById,UserDTO.class);
@@ -55,10 +59,16 @@ public class UserService {
     public UserDTO setUpPersonalAccount(UserDTO findUser, UserDTO userDTO) {
 
         if(findUser != null){
-            Long userID = findUser.getUserID();
-            userDTO.setUserID(userID);
-            userDTO.setUserName(findUser.getUserName());
-            User findUserClass = this.modelMapper.map(userDTO,User.class);
+            findUser.setFirstName(userDTO.getFirstName());
+            findUser.setLastName(userDTO.getLastName());
+            findUser.setDisplayEmail(userDTO.getDisplayEmail());
+            findUser.setPostalCode(userDTO.getPostalCode());
+            findUser.setCompany(userDTO.getCompany());
+            findUser.setLocation(userDTO.getLocation());
+            findUser.setPhoneNumber(userDTO.getPhoneNumber());
+            findUser.setTimeZone(userDTO.getTimeZone());
+
+            User findUserClass = this.modelMapper.map(findUser,User.class);
             userRepo.save(findUserClass);
             return userDTO;
         }

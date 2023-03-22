@@ -33,7 +33,7 @@ public class User implements UserDetails {
     private int phoneNumber;
 
     private String postalCode;
-    private String userName;
+    private String userNames;
 
     private String company;
 
@@ -43,6 +43,8 @@ public class User implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @OneToMany(mappedBy = "user")
+    private List<Token> token;
     @OneToOne
     @PrimaryKeyJoinColumn
     private Client client;

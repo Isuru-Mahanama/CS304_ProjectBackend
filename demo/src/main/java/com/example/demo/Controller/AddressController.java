@@ -11,11 +11,13 @@ import com.example.demo.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value ="api/v1/user")
-@CrossOrigin(origins ="*")
+@CrossOrigin(origins ="*", allowedHeaders = "*")
 public class AddressController {
 
     boolean success= false;
@@ -26,12 +28,15 @@ public class AddressController {
 
 
     @PostMapping("/saveAddress")
-    public ResponseEntity<Response> addAddress(@RequestBody AddreessLanguageDTO addreessLanguageDTO){
+    public ResponseEntity<Response> addAddress(@RequestBody AddreessLanguageDTO addreessLanguageDTO, @AuthenticationPrincipal UserDetails userDetails){
 
-        UserDTO userDTO = new UserDTO();
-        userDTO.setEmail(addreessLanguageDTO.getEmail());
-        UserDTO userDTO1 = userService.findUserID(userDTO);
+        System.out.println("hhh");
+       // UserDTO userDTO = new UserDTO();
+       // userDTO.setEmail(addreessLanguageDTO.getEmail());
+        UserDTO userDTO1 = userService.findUserID(userDetails);
 
+        System.out.println("fff");
+        System.out.println(userDTO1);
         AddressDTO addressDTO1 = addressService.saveAddress(userDTO1,addreessLanguageDTO);
         if(addressDTO1 !=null){
             success = true;

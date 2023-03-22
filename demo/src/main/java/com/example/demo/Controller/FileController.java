@@ -15,7 +15,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.io.IOException;
 @RestController
 @RequestMapping(value ="api/v1/user")
-@CrossOrigin(origins ="*")
+@CrossOrigin(origins ="*", allowedHeaders = "*")
 public class FileController {
     @Autowired
     private FileStorageService fileStorageService;

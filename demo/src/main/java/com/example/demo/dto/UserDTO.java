@@ -1,5 +1,6 @@
 package com.example.demo.dto;
 
+import com.example.demo.Model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,7 +21,7 @@ public class UserDTO {
     private String displayEmail;
     private int phoneNumber;
     private String postalCode;
-    private String userName;
+    private String userNames;
 
     private String company;
 
@@ -28,6 +29,7 @@ public class UserDTO {
     private String timeZone;
     private String password;
 
+    private Role role;
 
 
 }

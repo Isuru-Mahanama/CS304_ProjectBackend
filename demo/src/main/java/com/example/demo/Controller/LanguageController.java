@@ -10,11 +10,13 @@ import com.example.demo.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value ="api/v1/user")
-@CrossOrigin(origins ="*")
+@CrossOrigin(origins ="*", allowedHeaders = "*")
 public class LanguageController {
     public boolean success;
     @Autowired
@@ -23,11 +25,11 @@ public class LanguageController {
     private LanguageService languageService;
 
     @PostMapping("/saveLanguages")
-    public ResponseEntity<Response> addLanguage(@RequestBody AddreessLanguageDTO addreessLanguageDTO){
+    public ResponseEntity<Response> addLanguage(@RequestBody AddreessLanguageDTO addreessLanguageDTO,@AuthenticationPrincipal UserDetails userDetails){
 
         UserDTO userDTO = new UserDTO();
         userDTO.setEmail(addreessLanguageDTO.getEmail());
-        UserDTO userDTO1 = userService.findUserID(userDTO);
+        UserDTO userDTO1 = userService.findUserID(userDetails);
 
         LanguageDTO languageDTO = languageService.saveLanguages(userDTO1,addreessLanguageDTO);
         if(languageDTO !=null){

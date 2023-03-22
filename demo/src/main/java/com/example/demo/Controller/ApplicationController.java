@@ -15,7 +15,7 @@ import java.io.FileOutputStream;
 
 @RestController
 @RequestMapping(value ="api/v1/user")
-@CrossOrigin(origins ="*")
+@CrossOrigin(origins ="*", allowedHeaders = "*")
 public class ApplicationController {
     @Autowired
     private FileController fileController;

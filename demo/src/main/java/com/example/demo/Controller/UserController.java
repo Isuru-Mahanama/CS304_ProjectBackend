@@ -3,16 +3,19 @@ package com.example.demo.Controller;
 import com.example.demo.ErrorHandling.Response;
 import com.example.demo.Service.UserService;
 import com.example.demo.dto.UserDTO;
+import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 
 
 @RestController
 @RequestMapping(value ="api/v1/user")
-@CrossOrigin(origins ="*")
+@CrossOrigin(origins ="*" , allowedHeaders = "*")
 public class UserController {
 
     boolean success = false;
@@ -37,8 +40,10 @@ public class UserController {
         return new ResponseEntity<>(new Response(success, message), HttpStatus.OK);
     }
     @PutMapping("/saveUserName")
-     public ResponseEntity<Response> putUserName(@RequestBody UserDTO userDTO){
-        UserDTO updateUserName = userService.saveUserName(userDTO);
+     public ResponseEntity<Response> putUserName(@AuthenticationPrincipal UserDetails userDetails, @RequestBody UserDTO userDTO ){
+
+
+        UserDTO updateUserName = userService.saveUserName(userDTO,userDetails);
         if(updateUserName != null){
             success= true;
          }
@@ -48,9 +53,10 @@ public class UserController {
      }
 
     @PutMapping("/setUpUserAccount")
-    public ResponseEntity<Response> setUpUserAccountPersonalDetails(@RequestBody UserDTO userDTO){
+    public ResponseEntity<Response> setUpUserAccountPersonalDetails(@AuthenticationPrincipal UserDetails userDetails, @RequestBody UserDTO userDTO){
 
-        UserDTO findUser = userService.findUserID(userDTO);
+        System.out.println("afaa");
+        UserDTO findUser = userService.findUserID(userDetails);
         UserDTO setUpPersonalAccount = userService.setUpPersonalAccount(findUser,userDTO);
 
         if(setUpPersonalAccount!=null){

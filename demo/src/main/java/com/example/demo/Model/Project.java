@@ -36,6 +36,7 @@ public class Project {
     private String prizemaximum;
 
     private String currencyType;
+ //   private Long userID;
     @OneToOne
     @PrimaryKeyJoinColumn
     private FileUplod fileUplod;

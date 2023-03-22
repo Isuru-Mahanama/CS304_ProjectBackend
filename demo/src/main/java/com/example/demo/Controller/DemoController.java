@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/v1/user")
-@CrossOrigin(origins ="*")
+@RequestMapping("/api/v1/user/demo-controller")
+@CrossOrigin(origins ="*", allowedHeaders = "*")
 public class DemoController {
     @GetMapping
     public ResponseEntity<String> sayHello() {

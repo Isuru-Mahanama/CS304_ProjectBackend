@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value ="api/v1/user")
 @RequiredArgsConstructor
-@CrossOrigin(origins ="*")
+@CrossOrigin(origins ="*", allowedHeaders = "*")
 public class AuthenticationController {
     private final AuthenticationService service;
 

@@ -32,6 +32,7 @@ public class ProjectDTO {
     private String prizemaximum;
 
     private String currencyType;
+    private Long userID;
 
 
 

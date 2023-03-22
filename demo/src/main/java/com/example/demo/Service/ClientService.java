@@ -6,6 +6,7 @@ import com.example.demo.repo.ClientRepo;
 import com.example.demo.repo.UserRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,7 @@ public class ClientService {
 
     @Autowired
     private ModelMapper modelMapper;
+
     public ClientDTO saveClient(Long userID) {
         ClientDTO clientDTO= new ClientDTO();
         clientDTO.setClientID(userID);
@@ -35,17 +37,24 @@ public class ClientService {
         return clientDTO;
     }
 
-    public ClientDTO findUserID(ClientDTO clientDTO) {
-        User userById = userRepo.findUserByEmail(clientDTO.getEmail());
+    public ClientDTO findUserID(UserDetails userDetails,ClientDTO clientDTO) {
+        User userById = userRepo.findUserByEmail(userDetails.getUsername());
         clientDTO.setClientID(userById.getUserID());
         if(clientDTO!= null){
             return clientDTO;
         }
         return null;
     }
+    public User findUserByID(UserDetails userDetails) {
+        return userRepo.findUserByEmail(userDetails.getUsername());
+    }
 
     public boolean isTableFilled(Long clientID) {
         Optional<Client> client = clientRepo.findById(clientID);
         return !client.isEmpty();
+    }
+
+    public Optional<Client> getAllDetals(Long userID) {
+        return clientRepo.findById(userID);
     }
 }

@@ -10,6 +10,7 @@ import com.example.demo.repo.FreelancerRepo;
 import com.example.demo.repo.UserRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 
@@ -28,8 +29,8 @@ public class FreelancerDetailsService {
     @Autowired
     private UserRepo userRepo;
 
-    public void saveFreelancerDetails(FreelancerDetailsDTO freelancerDetailsDTO) {
-        User user = userRepo.findUserByEmail(freelancerDetailsDTO.getEmail());
+    public void saveFreelancerDetails(UserDetails userDetails,FreelancerDetailsDTO freelancerDetailsDTO) {
+        User user = userRepo.findUserByEmail(userDetails.getUsername());
         freelancerDetailsDTO.setFreelancerID(user.getUserID());
         freelancerDetailsRepo.save(modelMapper.map(freelancerDetailsDTO, Freelancer.class));
         Freelancer f =modelMapper.map(freelancerDetailsDTO, Freelancer.class);

@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value ="api/v1/user")
-@CrossOrigin(origins ="*")
+@CrossOrigin(origins ="*", allowedHeaders = "*")
 public class ConstructionSubCategoryController {
     @Autowired
     private ConstructionSubCategoriesService constructionSubCategoriesService;

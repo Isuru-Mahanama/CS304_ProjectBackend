@@ -8,8 +8,12 @@ import com.example.demo.repo.AddreessRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
+@Transactional
 public class AddressService {
 
     @Autowired
@@ -17,7 +21,16 @@ public class AddressService {
     @Autowired
     private ModelMapper modelMapper;
     @Autowired
-    private AddreessRepo addreessRepo;
+    private  AddreessRepo addreessRepo;
+
+    public String getCityByID(Long userID) {
+        Optional<Address> address =addreessRepo.findById(userID);
+        if(address.isPresent()){
+            return address.get().getCity();
+        }
+        return "-";
+    }
+
 
     public AddressDTO saveAddress(UserDTO userDTO, AddreessLanguageDTO addreessLanguageDTO) {
 

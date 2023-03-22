@@ -21,7 +21,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping(value ="api/v1/user")
-@CrossOrigin(origins ="*")
+@CrossOrigin(origins ="*", allowedHeaders = "*")
 public class PrizeController {
     @Autowired
     private ModelMapper modelMapper;
