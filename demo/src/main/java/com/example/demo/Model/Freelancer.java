@@ -27,9 +27,7 @@ public class Freelancer {
     @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "fk_c_id")
     private List<FreelancerCategoryDetails> categoryDetails= new ArrayList<>();
-    @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "fk_user_id")
-    private List<Project> userID= new ArrayList<>();
+
     private String  startDate;
     private String endDate;
 }

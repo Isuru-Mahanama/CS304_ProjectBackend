@@ -44,5 +44,8 @@ public class Project {
   /*  @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "projectIDD")
     private List<ApplyForTheProject> projectIDD= new ArrayList<>();*/
+    @ManyToOne
+    @JoinColumn(name = "userID")
+    private Client fk_userID;
 
 }

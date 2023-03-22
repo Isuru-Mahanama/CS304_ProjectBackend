@@ -64,10 +64,16 @@ public class ProjectController {
 
         UserDTO user = userService.findUserID(userDetails);
 
+        System.out.println("userID"+user.getUserID());
         ResponseEntity<FileResponseDTO>  imageDetails= fileController.uploadFile(image);
        ObjectMapper objectMapper = new ObjectMapper();
        ProjectDTO projectDTO = objectMapper.readValue(projectJson, ProjectDTO.class);
-        projectDTO.setUserID(user.getUserID());
+
+
+        Client client = clientService.findUserByID(userDetails).getClient();
+        projectDTO.setFk_userID(client);
+        System.out.println("Herre is the projexc");
+        System.out.println(projectDTO);
         System.out.println(projectDTO.getProjectType());
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         String filePath = "D:/ServerForMyProject/" + file.getOriginalFilename();
@@ -104,7 +110,7 @@ public class ProjectController {
         String city = addressService.getCityByID(user.getUserID());
         List<Project> projects = projectService.getAllProjectDetails();
         Map<String,Object> response = new HashMap<>();
-        response.put("Projects",projects);
+      //  response.put("Projects",projects);
         response.put("FreelancerDetails",freelancer);
         response.put("Languages",language);
         response.put("UserName",user.getUserNames());
@@ -205,20 +211,27 @@ public class ProjectController {
 
     @GetMapping("/getAllProjectDetailsANDClienDetails")
     public Map<String, Object> getAllprojectDetailsWithClient(@AuthenticationPrincipal UserDetails userDetails){
+
         UserDTO user = userService.findUserID(userDetails);
-        Optional<Client> client = clientService.getAllDetals(user.getUserID());
+
+       Optional<Client> client = clientService.getAllDetals(user.getUserID());
+        System.out.println("halloits project details1");
         Optional<Language> language = languageService.getLanguagesByID(user.getUserID());
         String city = addressService.getCityByID(user.getUserID());
         List<Project> projects = projectService.getAllProjectDetails();
        // Optional<Freelancer> freelancer = freelancerService.getAllDetals(user.getUserID());
 
+        System.out.println("halloits project details2");
         Map<String,Object> response = new HashMap<>();
         response.put("Projects",projects);
-        response.put("ClientDetails",client);
+
+         response.put("ClientDetails",client);
         response.put("Languages",language);
         response.put("UserName",user.getUserNames());
         response.put("City",city);
+        System.out.println("halloits project details3");
       //  response.put("Freelncer",freelancer);
+        System.out.println("rsponse"+response);
         return response;
 
     }

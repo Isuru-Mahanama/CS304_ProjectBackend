@@ -1,5 +1,7 @@
 package com.example.demo.dto;
 
+import com.example.demo.Model.Client;
+import com.example.demo.Model.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
@@ -32,7 +34,7 @@ public class ProjectDTO {
     private String prizemaximum;
 
     private String currencyType;
-    private Long userID;
+    private Client fk_userID;
 
 
 

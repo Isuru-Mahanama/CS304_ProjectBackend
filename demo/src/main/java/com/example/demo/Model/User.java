@@ -1,6 +1,7 @@
 package com.example.demo.Model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
@@ -43,6 +44,7 @@ public class User implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
+
     @OneToMany(mappedBy = "user")
     private List<Token> token;
     @OneToOne
@@ -60,6 +62,8 @@ public class User implements UserDetails {
     @OneToOne
     @PrimaryKeyJoinColumn
     private Freelancer freelancer;
+
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

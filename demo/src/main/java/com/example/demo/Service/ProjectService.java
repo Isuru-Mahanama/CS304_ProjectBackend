@@ -32,6 +32,8 @@ public class ProjectService {
 
     public void saveProjectDetails(ProjectDTO projectJson,String fileName,String filePath,String imageName,String imagePath) {
 
+        System.out.println("passed proej");
+        System.out.println(projectJson);
         System.out.println("In servive class"+projectJson.getAcategory());
         Optional<Prize> prize = prizeService.findProjectPrizeDetails(projectJson.getProjectType());
 
@@ -40,8 +42,12 @@ public class ProjectService {
         projectJson.setCurrencyType(prize.get().getPrizeType());
         projectJson.setProjectType(prize.get().getProjectType());
 
+        System.out.println(projectJson);
+
+
         //subCategoryRepo.save(modelMapper.map(projectJson.getAcategory(), Subcategory.class));
         Project project =  projectRepo.save(modelMapper.map(projectJson, Project.class));
+        System.out.println(project);
         Long projectID = project.getProjectID();
         subCategoryService.saveSubCategories(projectID,projectJson);
         fileUploadService.saveFileDetails(projectID,fileName,filePath,imageName,imagePath);
