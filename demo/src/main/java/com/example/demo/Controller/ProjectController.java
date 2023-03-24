@@ -110,7 +110,7 @@ public class ProjectController {
         String city = addressService.getCityByID(user.getUserID());
         List<Project> projects = projectService.getAllProjectDetails();
         Map<String,Object> response = new HashMap<>();
-      //  response.put("Projects",projects);
+        response.put("Projects",projects);
         response.put("FreelancerDetails",freelancer);
         response.put("Languages",language);
         response.put("UserName",user.getUserNames());

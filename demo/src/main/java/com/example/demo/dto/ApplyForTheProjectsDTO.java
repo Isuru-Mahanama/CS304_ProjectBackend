@@ -1,6 +1,5 @@
-package com.example.demo.Model;
+package com.example.demo.dto;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,14 +7,10 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.util.Date;
 
-@Table
-@Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Data
-public class ApplyForTheProject {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+@AllArgsConstructor
+@NoArgsConstructor
+public class ApplyForTheProjectsDTO {
     private Long projectApplicationID;
     private String moreDescription;
     private String selectedSubCategory;
@@ -25,12 +20,8 @@ public class ApplyForTheProject {
     private String resumePath;
     private String  projectIDD;
     private long freelancerID;
-    @Temporal(TemporalType.DATE)
-    @Column(name = "application_date")
+    private String projectTitle;
+    private Long clientID;
     private LocalDate applicationDate;
 
-    @PrePersist
-    protected void onCreate() {
-        applicationDate = LocalDate.now();
-    }
 }
