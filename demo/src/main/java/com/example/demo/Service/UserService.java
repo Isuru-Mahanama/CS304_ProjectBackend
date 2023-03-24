@@ -1,5 +1,4 @@
 package com.example.demo.Service;
-import com.example.demo.Model.Role;
 import com.example.demo.Model.User;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.repo.UserRepo;
@@ -9,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -73,5 +72,9 @@ public class UserService {
             return userDTO;
         }
         return null;
+    }
+
+    public List<User> findUserByID() {
+        return  userRepo.findAll();
     }
 }

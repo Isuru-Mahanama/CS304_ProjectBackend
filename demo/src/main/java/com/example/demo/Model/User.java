@@ -100,4 +100,23 @@ public class User implements UserDetails {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "userID=" + userID +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", displayEmail='" + displayEmail + '\'' +
+                ", phoneNumber=" + phoneNumber +
+                ", postalCode='" + postalCode + '\'' +
+                ", userNames='" + userNames + '\'' +
+                ", company='" + company + '\'' +
+                ", location='" + location + '\'' +
+                ", timeZone='" + timeZone + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                '}';
+    }
+
 }

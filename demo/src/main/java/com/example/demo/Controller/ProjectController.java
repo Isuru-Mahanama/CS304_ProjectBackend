@@ -236,6 +236,45 @@ public class ProjectController {
 
     }
 
+    @GetMapping("/CientPostedProjects")
+    public Map<String, Object> getAllClientPostedProjects(@AuthenticationPrincipal UserDetails userDetails){
+
+        UserDTO user = userService.findUserID(userDetails);
+
+        Optional<Client> client = clientService.getAllDetals(user.getUserID());
+        System.out.println("halloits project details1");
+        Optional<Language> language = languageService.getLanguagesByID(user.getUserID());
+        String city = addressService.getCityByID(user.getUserID());
+        List<Project> projects = projectService.getAllProjectDetails();
+        // Optional<Freelancer> freelancer = freelancerService.getAllDetals(user.getUserID());
+
+
+        Map<String,Object> response = new HashMap<>();
+        List<Project> projectsarray = new ArrayList<>();
+
+        for(Project p : projects){
+
+         if(user.getUserID() == p.getFk_userID().getClientID()){
+            projectsarray.add(p);
+
+         }
+
+        }
+        response.put("Projects",projectsarray);
+        System.out.println("halloits project details2");
+
+
+        response.put("ClientDetails",client);
+        response.put("Languages",language);
+        response.put("UserName",user.getUserNames());
+        response.put("City",city);
+        System.out.println("halloits project details3");
+        //  response.put("Freelncer",freelancer);
+        System.out.println("rsponse"+response);
+        return response;
+
+    }
+
 }
 
 
