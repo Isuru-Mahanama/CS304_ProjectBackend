@@ -21,6 +21,7 @@ public class SecurityConfig {
     private final AuthenticationProvider authenticationProvider;
 
     private final LogoutHandler logoutHandler;
+    private final LogoutHandler adminLogoutHandler;
 
 
     @Bean
@@ -31,6 +32,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/api/v1/user/**")
                 .permitAll()
+                .requestMatchers("/api/v1/admin/**")
+                .hasRole("ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -43,9 +46,16 @@ public class SecurityConfig {
                 .logoutUrl("/api/v1/user/logout")
                 .addLogoutHandler(logoutHandler)
                 .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
+                .and()
+                .logout()
+                .logoutUrl("/api/v1/admin/logout") // add a new logout URL for admins
+                .addLogoutHandler(adminLogoutHandler) // add a new logout handler for admins
+                .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext());
         ;
 
 
         return http.build();
     }
+
+
 }

@@ -30,6 +30,10 @@ public class AddressService {
         }
         return "-";
     }
+    public Optional<Address> getAddressByID(Long userID) {
+        Optional<Address> address =addreessRepo.findById(userID);
+        return address;
+    }
 
 
     public AddressDTO saveAddress(UserDTO userDTO, AddreessLanguageDTO addreessLanguageDTO) {

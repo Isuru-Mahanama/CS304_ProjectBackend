@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+
 import java.util.Collection;
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
 
     private Long userID;
+
     private String email;
     private String firstName;
     private String lastName;
@@ -41,6 +43,7 @@ public class User implements UserDetails {
     private String location;
     private String timeZone;
 
+    @JsonIgnore
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
