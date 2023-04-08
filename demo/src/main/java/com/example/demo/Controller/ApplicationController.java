@@ -12,6 +12,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +23,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.*;
 
 @RestController
@@ -75,30 +80,53 @@ public class ApplicationController {
     }
 
 
-    @GetMapping("/getAllApplicationDetails")
-    public Map<String, Object> getAllprojectDetails(@AuthenticationPrincipal UserDetails userDetails){
+    @GetMapping("/ViewAllApplicationCardsForTheProject/{projectIDD}")
+    public Map<String, Object> getAllApplicaitonDetails(@AuthenticationPrincipal UserDetails userDetails,@PathVariable String projectIDD){
+        System.out.println(projectIDD);
         UserDTO user = userService.findUserID(userDetails);
-        List<ApplyForTheProject> applyForTheProjects =  applicationService.findByuserID(user.getUserID());
-
-        List<ApplyForTheProjectsDTO> applyForTheProjectsDTOS = modelMapper.map(applyForTheProjects, new TypeToken<List<ApplyForTheProjectsDTO>>(){}.getType());
-        List<Optional<Project>> projects = new ArrayList<>();
-        for(ApplyForTheProjectsDTO a : applyForTheProjectsDTOS){
+        List<ApplyForTheProject> applyForTheProjects =  applicationService.findByProjectID(projectIDD);
+        // applicationService.findByProjectID(projectIDD);
+       List<ApplyForTheProjectsDTO> applyForTheProjectsDTOS = modelMapper.map(applyForTheProjects, new TypeToken<List<ApplyForTheProjectsDTO>>(){}.getType());
+       // List<Optional<Project>> projects = new ArrayList<>();
+      /*  for(ApplyForTheProjectsDTO a : applyForTheProjectsDTOS){
             String projectID = a.getProjectIDD();
            Optional<Project> project =  projectService.getProjectsByID(Long.parseLong(projectID));
             a.setProjectTitle(project.get().getProjectTitle());
             a.setClientID(project.get().getFk_userID().getClientID());
-        }
-     //   Optional<Freelancer> freelancer = freelancerService.getAllDetals(user.getUserID());
-     //   Optional<Language> language = languageService.getLanguagesByID(user.getUserID());
-     //   String city = addressService.getCityByID(user.getUserID());
-     //   List<Project> projects = projectService.getAllProjectDetails();
+        }*/
+
         Map<String,Object> response = new HashMap<>();
         response.put("Applications",applyForTheProjectsDTOS);
-       // response.put("Projects",projects);
-     //   response.put("Languages",language);
-      //  response.put("UserName",user.getUserNames());
-      //  response.put("City",city);
+
         return response;
 
     }
+
+    @GetMapping("/downloadApplication/{projectApplicationID}")
+    public ResponseEntity<Object>  downloadApplication(@PathVariable String projectApplicationID) throws IOException {
+        System.out.println(projectApplicationID);
+        Optional<ApplyForTheProject> application = applicationService.getApplicationByID(Long.parseLong(projectApplicationID));
+        System.out.println(application.get().getResumePath());
+
+        File file = new File(application.get().getResumePath());
+        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+        //  ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(file.toPath()));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition",
+                String.format("attachment; filename=\"%s\"", file.getName()));
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+
+        ResponseEntity<Object> responseEntity = ResponseEntity.ok().headers(headers)
+                .contentLength(file.length())
+                .contentType(MediaType.parseMediaType("application/txt")).body(resource);
+
+
+        return responseEntity;
+    }
+    //  System.out.println(responseEntities);
+
+
 }

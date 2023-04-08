@@ -44,12 +44,18 @@ public class ClientController {
     public ResponseEntity<Response> createClient(@RequestBody UserDTO userDTO, @AuthenticationPrincipal UserDetails userDetails) {
 
         UserDTO userID = userService.findUserID(userDetails);
-
-        ClientDTO savedClient = clientService.saveClient(userID.getUserID());
-        if (savedClient != null) {
-            success = true;
+        boolean clientExistitng = clientService.findeExisting(userID.getUserID());
+        System.out.println(clientExistitng);
+        if(clientExistitng == false) {
+            ClientDTO savedClient = clientService.saveClient(userID.getUserID());
+            if (savedClient != null) {
+                success = true;
+            }
+            String message = success ? "Client is saved successfully" : "Error saving user";
+            return new ResponseEntity<>(new Response(success, message), HttpStatus.OK);
         }
-        String message = success ? "Client is saved successfully" : "Error saving user";
+        success = true;
+        String message = success ? "Client is already saved" : "Error saving user";
         return new ResponseEntity<>(new Response(success, message), HttpStatus.OK);
     }
 
@@ -115,6 +121,26 @@ public class ClientController {
             // response.put("Languages",language);
             //   response.put("User",user);
             //response.put("City",city);
+            return response;
+
+        }
+
+
+        //retrieving the details from client table to fill the client form
+        @GetMapping("/retrieveClientDetails")
+        public Map<String, Object> getclientDetails(@AuthenticationPrincipal UserDetails userDetails){
+
+            UserDTO user = userService.findUserID(userDetails);
+
+            Optional<Client> client = clientService.getAllDetals(user.getUserID());
+            System.out.println("halloits project details1");
+
+            Map<String,Object> response = new HashMap<>();
+
+            response.put("ClientDetails",client);
+
+
+            System.out.println("rsponse"+response);
             return response;
 
         }

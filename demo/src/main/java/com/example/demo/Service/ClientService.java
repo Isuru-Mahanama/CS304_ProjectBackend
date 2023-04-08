@@ -58,4 +58,11 @@ public class ClientService {
     }
 
 
+    public boolean findeExisting(Long userID) {
+       Optional<Client> client =  clientRepo.findById(userID);
+       if(client != null){
+           return true;
+       }
+       return false;
+    }
 }

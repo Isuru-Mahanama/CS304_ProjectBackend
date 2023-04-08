@@ -9,4 +9,9 @@ import java.util.List;
 @Repository
 public interface ApplicationRepo extends JpaRepository<ApplyForTheProject,Long> {
     List<ApplyForTheProject> findByFreelancerID(long freelancerID);
+
+    List<ApplyForTheProject> findByProjectIDD(String projectIDD);
+
+
+    //List<ApplyForTheProject> findByProjectID(long projectID);
 }
