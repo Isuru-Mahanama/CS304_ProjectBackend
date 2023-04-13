@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -57,6 +58,11 @@ public class FreelancerController {
         response.put("Languages",language);
 
         return response;
+    }
+
+    @GetMapping("/getAllfreelancerNames")
+    public void getAllFreelancers(){
+       List<Freelancer> freelancers= freelancerService.getAllFreelancers();
     }
 
 }

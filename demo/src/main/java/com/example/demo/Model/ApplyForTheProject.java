@@ -25,12 +25,12 @@ public class ApplyForTheProject {
     private String resumePath;
     private String  projectIDD;
     private long freelancerID;
-    @Temporal(TemporalType.DATE)
-    @Column(name = "application_date")
-    private LocalDate applicationDate;
+    //@Temporal(TemporalType.DATE)
+   // @Column(name = "application_date")
+ //   private LocalDate applicationDate;
 
-    @PrePersist
-    protected void onCreate() {
-        applicationDate = LocalDate.now();
-    }
+    //@PrePersist
+  //  protected void onCreate() {
+      //  applicationDate = LocalDate.now();
+    //}
 }

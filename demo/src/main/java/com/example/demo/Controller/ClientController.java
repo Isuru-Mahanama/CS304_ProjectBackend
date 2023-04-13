@@ -137,7 +137,7 @@ public class ClientController {
 
             Map<String,Object> response = new HashMap<>();
 
-            response.put("ClientDetails",client);
+            response.put("ClientDetails",client.get());
 
 
             System.out.println("rsponse"+response);

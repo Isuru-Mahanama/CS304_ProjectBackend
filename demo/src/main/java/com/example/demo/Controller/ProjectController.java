@@ -225,8 +225,8 @@ public class ProjectController {
         Map<String,Object> response = new HashMap<>();
         response.put("Projects",projects);
 
-         response.put("ClientDetails",client);
-        response.put("Languages",language);
+         response.put("ClientDetails",client.get());
+        response.put("Languages",language.get());
         response.put("UserName",user.getUserNames());
         response.put("City",city);
         System.out.println("halloits project details3");
